@@ -1,0 +1,155 @@
+#provide application in applicatio.properties
+spring.application.name=limits-service
+
+Spring Cloud Configuration steps:
+============================
+1)Install GIT  
+2)Go to cmd prompt (where we want to store content of GIT repository)
+ 
+     -->mkdir git-localconfig-repo(it will create directory)
+
+go to this directory
+----->cd  git-localconfig-repo
+>git init(it will create empty git repo)
+
+3)Go to Eclipse >right click on project>GO to bulid path>Linked resources >provide local git repo location
+4)create new file like      
+
+limits-service.properites
+===================
+
+limits-service.min=2
+limits-service.max=3
+
+5) Then commit this changes to local repo
+using cmd prompt
+>git add -A
+>git commit -m "message"
+
+then it will save this file to local git repo
+
+...when ever changes made in file we must commit into local git repo
+
+how to connect  spring cloud config server  to local git repo:
+====================================
+1)  Right click on folder> properties copy path:
+
+then go to properties file provide  path of local git repo
+ 
+url:localhost:port/limits-service/default
+
+
+#Ribbon
+=======
+DynamicServerListLoadBalancer for client currency-exchange-service initialized: 
+    DynamicServerListLoadBalancer:
+{NFLoadBalancer:name=currency-exchange-service,
+       current list of Servers=[localhost:8002, localhost:8003, localhost:8000],
+
+Load balancer stats=Zone stats: {unknown=[Zone:unknown;	
+              Instance count:3;	
+             Active connections count: 0;	
+             Circuit breaker tripped count: 0;	
+             Active connections per server: 0.0;]},
+
+Server stats: [[Server:localhost:8000;	
+      Zone:UNKNOWN;	
+     Total Requests:0;	
+     Successive connection failure:0;	
+     Total blackout seconds:0;	
+      Last connection made:Thu Jan 01 05:30:00 IST 1970;	
+      First connection made: Thu Jan 01 05:30:00 IST 1970;	
+     Active Connections:0;	
+     total failure count in last (1000) msecs:0;	
+     average resp time:0.0;	
+     90 percentile resp time:0.0;	
+     95 percentile resp time:0.0;	
+     min resp time:0.0;	
+     max resp time:0.0;	
+     stddev resp time:0.0],
+
+ [Server:localhost:8003;
+   Zone:UNKNOWN;
+   Total Requests:0;	
+   Successive connection failure:0;
+   Total blackout seconds:0;	
+   Last connection made:Thu Jan 01 05:30:00 IST 1970;	
+   First connection made: Thu Jan 01 05:30:00 IST 1970;	
+   Active Connections:0;	
+   total failure count in last (1000) msecs:0;
+  average resp time:0.0;	
+  90 percentile resp time:0.0;
+  95 percentile resp time:0.0;	
+  min resp time:0.0;
+  max resp time:0.0;	
+  stddev resp time:0.0],
+
+ [Server:localhost:8002;
+	Zone:UNKNOWN;
+	Total Requests:0;	
+                 Successive connection failure:0;
+	Total blackout seconds:0;	
+                    Last connection made:Thu Jan 01 05:30:00 IST 1970;
+	First connection made: Thu Jan 01 05:30:00 IST 1970;	
+                 Active Connections:0;	
+            total failure count in last (1000) msecs:0;	
+          average resp time:0.0;	
+            90 percentile resp time:0.0;	
+              95 percentile resp time:0.0;	
+               min resp time:0.0;	
+           max resp time:0.0;	
+              stddev resp time:0.0]]}
+
+ServerList:
+com.netflix.loadbalancer.ConfigurationBasedServerList@7f716df0
+2018-05-19 11:34:27.318  INFO 6544 --- [erListUpdater-0] c.netflix.config.ChainedDynamicProperty  : Flipping property: currency-exchange-service.ribbon.ActiveConnectionsLimit to use NEXT property: niws.loadbalancer.availabilityFilteringRule.activeConnectionsLimit = 2147483647
+
+
+
+
+API GateWay For Microservices:
+===========================
+
+1)Authentication, authorization and security
+2)Rate Limits
+3)Fault Tolerance
+4)Service Aggregation
+
+
+
+
+Zuul uri
+======
+syntax------------->http://localhost:8765/{service-name}/{uri}
+
+http://localhost:8765/currency-exchange-service/currency-exchange/from/NZD/to/INR
+http://localhost:8000//currency-exchange/from/AUD/to/INR
+
+
+
+http://localhost:8765/currency-conversion-service/currency-converter/from/EUR/to/INR/quantity/10
+
+http://localhost:8100/currency-exchange/from/AUD/to/INR
+
+
+    request-->org.springframework.cloud.netflix.zuul.filters.pre.Servlet30RequestWrapper@63bbedc8  
+   request uri ---->/currency-exchange-service/currency-exchange/from/NZD/to/INR  
+
+
+Q) By using Api gate ways , calling micro services is complex  and when ever exception comes or Microservice is down How  we can check which service got down ????
+
+ANS) that's where we can use  distributed tracing
+
+
+
+
+
+
+
+
+
+#Eureka config
+=============
+server.port=9091
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false

@@ -1,0 +1,10 @@
+org.hibernate.TransientPropertyValueException: object references an unsaved transient instance 
+
+- save the transient instance before flushing : 
+com.sathyatech.app.model.Item.omPurchase -> com.sathyatech.app.model.OrderMethod; 
+
+nested exception is java.lang.IllegalStateException: 
+org.hibernate.TransientPropertyValueException: object references an unsaved transient instance 
+
+- save the transient instance before flushing : 
+com.sathyatech.app.model.Item.omPurchase -> com.sathyatech.app.model.OrderMethod
